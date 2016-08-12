@@ -1,2 +1,5 @@
 # hello-world
-my hello repo
+This jimmy's hello repository
+Looks good.
+
+Great!
