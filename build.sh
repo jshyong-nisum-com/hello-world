@@ -3,9 +3,11 @@
 # Build script for HelloWorld App
 # =========================
 
+pwd=`pwd`
 echo "Starting building Jimmy hello-world..."
-cd /Users/NIS1643-mbpr/data/my-workspace/hello-world
-javac -d bin src/main/java/HelloWorld.java
-java -cp target/classes HelloWorld
+echo "Current working dir: $pwd"
+# cd /Users/NIS1643-mbpr/data/my-workspace/hello-world
+javac -d build/classes src/main/java/test/jenkins/hello/HelloWorld.java
+java -cp build/classes test.jenkins.hello.HelloWorld
 echo "Done building Jimmy hello-world!"
 

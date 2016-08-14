@@ -1,1 +1,10 @@
-/target/
+.DS_Store
+.project
+.settings
+build
+target
+
+.classpath
+.project
+.settings
+.gitignore

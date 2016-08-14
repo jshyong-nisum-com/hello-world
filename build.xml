@@ -1,0 +1,58 @@
+<project name="hello-world" default="test" basedir=".">
+	<property name="builddir" location="build" />
+	<property name="junit.output.dir" location="build/tests" />
+	<property name="libdir" location="lib" />
+	<property name="srcdir" location="src/main/java" />
+	<property name="testsrcdir" location="src/test/java" />
+	<property name="full-compile" value="true" />
+
+	<path id="classpath.base" />
+
+	<path id="classpath.test">
+		<pathelement location="${libdir}/junit-4.10.jar" />
+		<pathelement location="${builddir}/classes" />
+		<pathelement location="${srcdir}" />
+		<pathelement location="${testsrcdir}" />
+		<path refid="classpath.base" />
+	</path>
+
+	<target name="clean">
+		<delete verbose="${full-compile}">
+			<fileset dir="${builddir}" includes="**/*.*" />
+		</delete>
+	</target>
+
+	<target name="prepare">
+		<mkdir dir="${builddir}" />
+		<mkdir dir="${builddir}/classes" />
+		<mkdir dir="${builddir}/tests/reports" />
+	</target>
+
+	<target name="compile" depends="clean, prepare">
+		<javac srcdir="${srcdir}" destdir="${builddir}/classes" verbose="${full-compile}">
+			<classpath refid="classpath.test" />
+		</javac>
+		<javac srcdir="${testsrcdir}" destdir="${builddir}/classes" verbose="${full-compile}">
+			<classpath refid="classpath.test" />
+		</javac>
+	</target>
+
+	<target name="test" depends="compile">
+		<junit printsummary="true" haltonfailure="false">
+			<classpath refid="classpath.test" />
+			<formatter type="xml" usefile="true" />
+			<test name="test.jenkins.hello.HelloWorldTest" fork="yes" todir="${junit.output.dir}" />
+		</junit>
+	</target>
+
+	<target name="test-reports" depends="test">
+		<junitreport tofile="TESTS-TestSuites.xml" todir="${junit.output.dir}/reports">
+			<fileset dir="${junit.output.dir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${junit.output.dir}/reports" />
+		</junitreport>
+		<echo message="The junit test report is located at: file:///Users/NIS1643-mbpr/data/my-workspace/hello-world/build/tests/reports/index.html" />
+	</target>
+
+</project>
